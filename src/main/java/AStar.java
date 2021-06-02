@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import static processing.core.PApplet.dist;
 
 class AStar {
-    int scale = 20, rows, cols;
-    List< List< Cell > > array;
-    List< Cell > openList, closedList, path;
-    Cell startNode, endNode, q;
-    int dist = 1;
-    boolean searchDone = false;
+    private int scale = 20, rows, cols;
+    private List< List< Cell > > array;
+    private List< Cell > openList, closedList, path;
+    private Cell startNode, endNode, q;
+    private int dist = 1;
+    private boolean searchDone = false;
 
     AStar(List< List<Cell> > ar, int rows, int cols, int sc){
         // PART 1 & 2
@@ -25,8 +25,8 @@ class AStar {
         this.startNode = this.array.get( 0 ).get( 0 );
         this.endNode = this.array.get( rows - 1 ).get( cols - 1 );
 
-        this.startNode.f = 0;
-        this.startNode.g = 0;
+        this.startNode.setF(0);
+        this.startNode.setG(0);
 
         this.openList.add( this.startNode );
     }
@@ -40,7 +40,7 @@ class AStar {
             this.q = this.openList.get(0);
 
             for(Cell c : openList){
-                if( c.f < this.q.f ){
+                if( c.getF() < this.q.getF() ){
                     this.q = c;
                 }
             }
@@ -57,24 +57,24 @@ class AStar {
                 if( !this.closedList.contains( s ) ){
 
                     if(s == endNode ){
-                        s.parent = this.q;
+                        s.setParent(this.q);
                         System.out.println("Done");
                         this.searchDone = true;
                     }
                     if( !this.closedList.contains( s ) ){
 
-                        gNew = this.q.g + 1;// sqrt(2) if there a succesor is in the corner
+                        gNew = this.q.getG() + 1;// sqrt(2) if there a succesor is in the corner
                         hNew = this.heuristic(s, this.endNode);
                         fNew = gNew + hNew;
 
-                        if( s.f == Float.MAX_VALUE || s.f > fNew ){
+                        if( s.getF() == Float.MAX_VALUE || s.getF() > fNew ){
                             this.openList.add( s );
 
-                            s.f = fNew;
-                            s.g = gNew;
-                            s.h = hNew;
+                            s.setF(fNew);
+                            s.setG(gNew);
+                            s.setH(hNew);
 
-                            s.parent = this.q;
+                            s.setParent(this.q);
                         }
                     }
                 }
@@ -95,32 +95,32 @@ class AStar {
         // GET THE NEIGHBORS/SUCCESSORS WHEN POSSIBLE
         Cell up = null, left = null, down = null, right = null;
         try{
-            up = this.array.get(cell.i - 1).get(cell.j);
+            up = this.array.get(cell.getI() - 1).get(cell.getJ());
         } catch (Exception e) {}
         try{
-            left = this.array.get(cell.i).get(cell.j - 1);
+            left = this.array.get(cell.getI()).get(cell.getJ() - 1);
         } catch (Exception e){}
         try{
-            down = this.array.get(cell.i + 1).get(cell.j);
+            down = this.array.get(cell.getI() + 1).get(cell.getJ());
         } catch (Exception e) {}
         try{
-            right = this.array.get(cell.i).get(cell.j + 1);
+            right = this.array.get(cell.getI()).get(cell.getJ() + 1);
         } catch (Exception e){}
 
-        if( up != null && !cell.walls[0] )
+        if( up != null && !cell.getWalls()[0] )
             s.add(up);
-        if( left != null && !cell.walls[1] )
+        if( left != null && !cell.getWalls()[1] )
             s.add(left);
-        if( down != null && !down.walls[0] )
+        if( down != null && !down.getWalls()[0] )
             s.add(down);
-        if( right != null && !right.walls[1] )
+        if( right != null && !right.getWalls()[1] )
             s.add(right);
 
         return s;
     }
 
     private float heuristic(Cell a, Cell b){
-        return dist( a.j, a.i, b.j, b.i );
+        return dist( a.getJ(), a.getI(), b.getJ(), b.getI() );
         //return abs( a.i - b.i ) + abs( a.j - b.j );
     }
 
@@ -139,9 +139,9 @@ class AStar {
         Cell temp = q;
         this.path.add(temp);
 
-        while( temp.parent != null ){
-            this.path.add( temp.parent );
-            temp = temp.parent;
+        while( temp.getParent() != null ){
+            this.path.add( temp.getParent() );
+            temp = temp.getParent();
         }
 
         for(Cell c : path)
@@ -152,5 +152,8 @@ class AStar {
 
     }
 
+    public boolean isSearchDone() {
+        return searchDone;
+    }
 
 }

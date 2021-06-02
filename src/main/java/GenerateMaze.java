@@ -37,7 +37,7 @@ class GenerateMaze{
         for(Cell c : stack)
             c.show(52, 52, 206);
 
-        this.currentVisited.isVisited = true;
+        this.currentVisited.setVisited(true);
         this.currentVisited.show(62, 229, 205);
 
         Cell next = getNeighbor(currentVisited);
@@ -74,28 +74,28 @@ class GenerateMaze{
 
         // GET ALL THE POSSIBLE NEIGHBORS
         try{
-            top = this.array.get( current.i - 1 ).get( current.j );
-            if( !top.isVisited )
+            top = this.array.get( current.getI() - 1 ).get( current.getJ() );
+            if( !top.isVisited() )
                 neighbors.add( top );
         } catch (Exception e) {}
 
         try{
-            left = this.array.get( current.i ).get( current.j - 1 );
-            if( !left.isVisited )
+            left = this.array.get( current.getI() ).get( current.getJ() - 1 );
+            if( !left.isVisited() )
                 neighbors.add( left );
 
         } catch (Exception e) {}
 
         try{
-            bottom = this.array.get( current.i + 1 ).get( current.j );
-            if( !bottom.isVisited )
+            bottom = this.array.get( current.getI() + 1 ).get( current.getJ() );
+            if( !bottom.isVisited() )
                 neighbors.add( bottom );
 
         } catch (Exception e) {}
 
         try{
-            right = this.array.get( current.i ).get( current.j + 1 );
-            if( !right.isVisited )
+            right = this.array.get( current.getI() ).get( current.getJ() + 1 );
+            if( !right.isVisited() )
                 neighbors.add( right );
 
         } catch (Exception e) {}
@@ -109,13 +109,13 @@ class GenerateMaze{
 
         // REMOVING THE WALL BETWEEN THE CURRENT AND THE NEXT CELL
         if(next == top)
-            current.walls[0] = false;
+            current.getWalls()[0] = false;
         else if(next == left)
-            current.walls[1] = false;
+            current.getWalls()[1] = false;
         else if(next == bottom)
-            next.walls[0] = false;
+            next.getWalls()[0] = false;
         else if(next == right)
-            next.walls[1] = false;
+            next.getWalls()[1] = false;
 
         return next;
     }
@@ -124,7 +124,7 @@ class GenerateMaze{
 
         while( !this.stack.isEmpty() ){
 
-            this.currentVisited.isVisited = true;
+            this.currentVisited.setVisited(true);
 
             Cell next = getNeighbor(currentVisited);
 

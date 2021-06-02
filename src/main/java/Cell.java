@@ -4,12 +4,12 @@ import java.util.List;
 import java.util.ArrayList;
 
 class Cell{
-    public int i, j;
-    public boolean walls[] = {true, true};
-    public boolean isVisited = false;
+    private int i, j;
+    private boolean walls[] = {true, true};
+    private boolean isVisited = false;
 
-    public float f = Float.MAX_VALUE, g, h;
-    public Cell parent;
+    private float f = Float.MAX_VALUE, g, h;
+    private Cell parent;
 
     PApplet pApplet;
 
@@ -42,4 +42,75 @@ class Cell{
         pApplet.ellipse(this.j * Config.sc + Config.sc / 2, this.i * Config.sc + Config.sc / 2, 9, 9);
     }
 
+    public int getI() {
+        return i;
+    }
+
+    public void setI(int i) {
+        this.i = i;
+    }
+
+    public int getJ() {
+        return j;
+    }
+
+    public void setJ(int j) {
+        this.j = j;
+    }
+
+    public boolean[] getWalls() {
+        return walls;
+    }
+
+    public void setWalls(boolean[] walls) {
+        this.walls = walls;
+    }
+
+    public boolean isVisited() {
+        return isVisited;
+    }
+
+    public void setVisited(boolean visited) {
+        isVisited = visited;
+    }
+
+    public float getF() {
+        return f;
+    }
+
+    public void setF(float f) {
+        this.f = f;
+    }
+
+    public float getG() {
+        return g;
+    }
+
+    public void setG(float g) {
+        this.g = g;
+    }
+
+    public float getH() {
+        return h;
+    }
+
+    public void setH(float h) {
+        this.h = h;
+    }
+
+    public Cell getParent() {
+        return parent;
+    }
+
+    public void setParent(Cell parent) {
+        this.parent = parent;
+    }
+
+    public PApplet getpApplet() {
+        return pApplet;
+    }
+
+    public void setpApplet(PApplet pApplet) {
+        this.pApplet = pApplet;
+    }
 }

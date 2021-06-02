@@ -27,7 +27,7 @@ public class Main extends PApplet {
         showArray();
         if( !gm.finished )
             gm.update();
-        else if( !aStar.searchDone ){
+        else if( !aStar.isSearchDone() ){
             aStar.update();
             aStar.drawArray();
         } else {
